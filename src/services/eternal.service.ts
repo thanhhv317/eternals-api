@@ -110,7 +110,7 @@ export class EternalService {
         result: 10,
         failed: 0
       },
-      url: `${DOMAIN}activity-history/${idHistory}/claimed`
+      url: `${DOMAIN}/activity-history/${idHistory}/claimed`
     })
 
     // get result

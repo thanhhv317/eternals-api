@@ -94,7 +94,7 @@ export default class App {
     // play 🤾🏻‍♂️ jumping ropes
     scheduleJob('0 */30 * * * *', async () => {
       console.log('[Cron job] jumping rope ')
-      // await service.jumpingRope()
+      await service.jumpingRope()
     })
   }
 }
