@@ -30,6 +30,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "node-cron": "^3.0.3",
+    "node-schedule": "^2.1.1",
     "perf_hooks": "^0.0.1",
     "redis": "^4.6.13",
     "reflect-metadata": "^0.1.13",

@@ -2,6 +2,7 @@ import axios from 'axios'
 import { slice } from 'lodash'
 import { Service } from 'typedi'
 import { SECRET_TOKEN } from '@/config'
+import { EternalItems } from '@/constants/eternal-item.constants'
 
 const HARVERT_ACTION = 114
 const DOMAIN = 'https://api-core.eternals.game'
@@ -61,7 +62,7 @@ export class EternalService {
   }
 
   getEnergyPerItem(item: string) {
-    if (item === 'mobject_00012') {
+    if (item === EternalItems.meatRabbit) {
       return 10
     }
     // return 3

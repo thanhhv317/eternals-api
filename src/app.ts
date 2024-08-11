@@ -1,16 +1,16 @@
 import 'reflect-metadata'
 import 'express-async-errors'
-import compression from 'compression'
 import cors from 'cors'
 import express from 'express'
-import helmet from 'helmet'
 import hpp from 'hpp'
-import swaggerJSDoc from 'swagger-jsdoc'
-import swaggerUi from 'swagger-ui-express'
 import { Routes } from '@interfaces/routes.interface'
 import { ErrorMiddleware } from '@middlewares/error.middleware'
 import { ResponseMiddleware } from '@middlewares/response.middleware'
 import { PORT } from './config'
+import { scheduleJob } from 'node-schedule'
+import Container from 'typedi'
+import { EternalService } from './services/eternal.service'
+import { EternalItems } from './constants/eternal-item.constants'
 
 export default class App {
   public app: express.Application
@@ -23,9 +23,9 @@ export default class App {
 
     this.initializeMiddlewares()
     this.initializeRoutes(routes)
-    this.initializeSwagger()
     this.initializeErrorHandling()
     this.initializeHealthCheck()
+    this.initializeCronjob()
   }
 
   public listen() {
@@ -44,10 +44,7 @@ export default class App {
     this.app.use(cors({ credentials: true }))
     this.app.use(hpp())
     this.app.use(ResponseMiddleware)
-    this.app.use(helmet())
-    this.app.use(compression())
     this.app.use(express.json())
-    this.app.use(express.urlencoded({ extended: true }))
   }
 
   private initializeRoutes(routes: Routes[]) {
@@ -56,29 +53,48 @@ export default class App {
     })
   }
 
-  private initializeSwagger() {
-    const options = {
-      swaggerDefinition: {
-        info: {
-          title: 'REST API',
-          version: '1.0.0',
-          description: 'Example docs'
-        }
-      },
-      apis: ['swagger.yaml']
-    }
-
-    const specs = swaggerJSDoc(options)
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
-  }
-
   private initializeErrorHandling() {
     this.app.use(ErrorMiddleware)
   }
+
   private initializeHealthCheck() {
     this.app.get('/health', (req, res) => res.json(true))
-    this.app.get('/ping', (req, res) => res.json(true))
-    this.app.get('/health-check', (req, res) => res.json(true))
   }
 
+  private initializeCronjob() {
+    const service = Container.get(EternalService)
+    // 🐏 sheeps - 4 energy
+    scheduleJob('0 0 0 * * *', async () => {
+      console.log('[Cron job] harverting 10 sheeps')
+      await service.harvertResouce(EternalItems.wool, 10)
+    })
+    scheduleJob('0 0 1 * * *', async () => {
+      console.log('[Cron job] harverting 10 sheeps')
+      await service.harvertResouce(EternalItems.wool, 10)
+    })
+    // 🪵 - 3 energy
+    scheduleJob('0 0 2 * * *', async () => {
+      console.log('[Cron job] harverting 10 woods')
+      await service.harvertResouce(EternalItems.woods, 10)
+    })
+    scheduleJob('0 0 3 * * *', async () => {
+      console.log('[Cron job] harverting 10 woods')
+      await service.harvertResouce(EternalItems.woods, 10)
+    })
+    // 🦋 - 4 energy
+    scheduleJob('0 0 4 * * *', async () => {
+      console.log('[Cron job] harverting 10 butterflies')
+      await service.harvertResouce(EternalItems.butterfly, 10)
+    })
+    scheduleJob('0 0 5 * * *', async () => {
+      console.log('[Cron job] harverting 10 butterflies')
+      await service.harvertResouce(EternalItems.butterfly, 10)
+    })
+
+    // play 🤾🏻‍♂️ jumping ropes
+    scheduleJob('0 */30 * * * *', async () => {
+      console.log('[Cron job] jumping rope ')
+      // await service.jumpingRope()
+    })
+  }
 }
