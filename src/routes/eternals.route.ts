@@ -14,5 +14,6 @@ export class EternalRoute implements Routes {
   private initializeRoutes() {
     this.router.get('/resources', this.controller.getResource)
     this.router.post('/resources', this.controller.havestResrouce)
+    this.router.post('/traning/jumping-ropes', this.controller.jumpingRope)
   }
 }

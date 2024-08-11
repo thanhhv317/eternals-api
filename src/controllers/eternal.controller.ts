@@ -8,15 +8,20 @@ export class EtenalController {
     this.service = Container.get(EternalService)
   }
 
-  public getResource = async (req: Request, res: Response) => {
+  getResource = async (req: Request, res: Response) => {
     const { item } = req.query
     const result = await this.service.getResource(item as string)
     res.zap(result)
   }
 
-  public havestResrouce = async (req: Request, res: Response) => {
+  havestResrouce = async (req: Request, res: Response) => {
     const { item, quantity = 1 } = req.body
     const result = await this.service.harvestResouce(item, quantity)
+    res.zap(result)
+  }
+
+  jumpingRope = async (req: Request, res: Response) => {
+    const result = await this.service.jumpingRope()
     res.zap(result)
   }
 }
