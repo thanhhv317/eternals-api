@@ -4,7 +4,7 @@ import { Service } from 'typedi'
 import { SECRET_TOKEN } from '@/config'
 import { EternalItems } from '@/constants/eternal-item.constants'
 
-const HARVERT_ACTION = 114
+const harvest_ACTION = 114
 const DOMAIN = 'https://api-core.eternals.game'
 
 @Service()
@@ -21,8 +21,8 @@ export class EternalService {
     return result
   }
 
-  async harvertResouce(item: string, quantity = 1) {
-    console.log("🚀 ~ EternalService ~ harvertResouce ~ quantity:", quantity)
+  async harvestResouce(item: string, quantity = 1) {
+    console.log("🚀 ~ EternalService ~ harvestResouce ~ quantity:", quantity)
     try {
       const { data } = await axios.get(`${DOMAIN}/user-maps/game/eternal?time=${Math.floor(Date.now() / 1000)}`, {
         headers: {
@@ -31,12 +31,12 @@ export class EternalService {
       })
       const energy = await this.getEnergy()
       const energyPerItem = this.getEnergyPerItem(item)
-      console.log("🚀 ~ EternalService ~ harvertResouce ~ energy:", energy)
+      console.log("🚀 ~ EternalService ~ harvestResouce ~ energy:", energy)
       const { object }: { object: { birth: number, code: string, id: number }[] } = data.data
       const obj = object.filter((it) => it.code === item)
       const range = Math.min(Number(quantity), Math.trunc(energy / energyPerItem))
       for (let i = 0; i < range; i++) {
-        console.log(`${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${HARVERT_ACTION}`)
+        console.log(`${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${harvest_ACTION}`)
 
         setTimeout(async () => {
           try {
@@ -47,7 +47,7 @@ export class EternalService {
                 'content-type': 'application/json',
                 'origin': 'https://eternals-webgl.static.cyborg.game',
               },
-              url: `${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${HARVERT_ACTION}`
+              url: `${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${harvest_ACTION}`
             })
           } catch (error) {
             throw new Error(error?.data || error?.message)
