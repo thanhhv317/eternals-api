@@ -14,9 +14,9 @@ export class EtenalController {
     res.zap(result)
   }
 
-  public havertResrouce = async (req: Request, res: Response) => {
+  public havestResrouce = async (req: Request, res: Response) => {
     const { item, quantity = 1 } = req.body
-    const result = await this.service.harvertResouce(item, quantity)
+    const result = await this.service.harvestResouce(item, quantity)
     res.zap(result)
   }
 }
