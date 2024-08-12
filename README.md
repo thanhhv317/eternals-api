@@ -55,3 +55,4 @@ yarn build
 | ------------ | -------- | ------- | -------------------------------------- |
 | PORT         | no       | `3000`  | HTTP server port                       |
 | SECRET_TOKEN | yes      | -       | The token when log in in eternals game |
+| BOT_TOKEN    | yes      | -       | The telegram bot token                 |
