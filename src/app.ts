@@ -64,24 +64,58 @@ export default class App {
   private initializeCronjob() {
     const service = Container.get(EternalService)
     // 🐏 sheeps - 4 energy
-    scheduleJob('0 0 0 * * *', async () => {
+    scheduleJob('0 0 16 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
       await service.harvestResouce(EternalItems.wool, 10)
+    })
+    scheduleJob('0 0 17 * * *', async () => {
+      console.log('[Cron job] harverting 10 sheeps')
+      await service.harvestResouce(EternalItems.wool, 10)
+    })
+    scheduleJob('0 0 18 * * *', async () => {
+      console.log('[Cron job] harverting 10 sheeps')
+      await service.harvestResouce(EternalItems.wool, 10)
+    })
+    scheduleJob('0 0 19 * * *', async () => {
+      console.log('[Cron job] harverting 10 sheeps')
+      await service.harvestResouce(EternalItems.wool, 10)
+    })
+    scheduleJob('0 0 20 * * *', async () => {
+      console.log('[Cron job] harverting 10 sheeps')
+      await service.harvestResouce(EternalItems.wool, 10)
+    })
+  
+    // 🪵 - 3 energy
+    scheduleJob('0 0 21 * * *', async () => {
+      console.log('[Cron job] harverting 10 woods')
+      await service.harvestResouce(EternalItems.woods, 10)
+    })
+    scheduleJob('0 0 22 * * *', async () => {
+      console.log('[Cron job] harverting 10 woods')
+      await service.harvestResouce(EternalItems.woods, 10)
+    })
+    scheduleJob('0 0 23 * * *', async () => {
+      console.log('[Cron job] harverting 10 woods')
+      await service.harvestResouce(EternalItems.woods, 10)
+    })
+    scheduleJob('0 0 0 * * *', async () => {
+      console.log('[Cron job] harverting 10 woods')
+      await service.harvestResouce(EternalItems.woods, 10)
     })
     scheduleJob('0 0 1 * * *', async () => {
-      console.log('[Cron job] harverting 10 sheeps')
-      await service.harvestResouce(EternalItems.wool, 10)
-    })
-    // 🪵 - 3 energy
-    scheduleJob('0 0 2 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
       await service.harvestResouce(EternalItems.woods, 10)
+    })
+
+    // 🦋 - 4 energy
+    scheduleJob('0 0 2 * * *', async () => {
+      console.log('[Cron job] harverting 10 butterfly')
+      await service.harvestResouce(EternalItems.butterfly, 10)
     })
     scheduleJob('0 0 3 * * *', async () => {
-      console.log('[Cron job] harverting 10 woods')
-      await service.harvestResouce(EternalItems.woods, 10)
+      console.log('[Cron job] harverting 10 butterfly')
+      await service.harvestResouce(EternalItems.butterfly, 10)
     })
-    // 🦋 - 4 energy
     scheduleJob('0 0 4 * * *', async () => {
       console.log('[Cron job] harverting 10 butterflies')
       await service.harvestResouce(EternalItems.butterfly, 10)
@@ -92,7 +126,7 @@ export default class App {
     })
 
     // play 🤾🏻‍♂️ jumping ropes
-    scheduleJob('0 */30 * * * *', async () => {
+    scheduleJob('0 */15 * * * *', async () => {
       console.log('[Cron job] jumping rope ')
       await service.jumpingRope()
     })
