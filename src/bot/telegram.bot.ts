@@ -22,7 +22,7 @@ export class TelegramBot {
   }
 
   private async harvertRabbit(ctx: any) {
-    const result = await this.service.harvestResouce(EternalItems.meatRabbit, 1)
+    const result = await this.service.harvestResouce(EternalItems.meatRabbit, 5)
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
