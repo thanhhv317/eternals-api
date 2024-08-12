@@ -26,12 +26,12 @@ export class TelegramBot {
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
-        `Harvert ${result.length} rabbits 🐇`,
+        `Harvert ${result.length} ${result.length > 1 ? 'rabbits': 'rabbit'} 🐇`,
       )
     } else {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
-        `Harvert rabbits failed 🐇`,
+        `Harvert rabbit failed ❌`,
       )
     }
   }
