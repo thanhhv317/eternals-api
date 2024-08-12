@@ -11,11 +11,13 @@ import { scheduleJob } from 'node-schedule'
 import Container from 'typedi'
 import { EternalService } from './services/eternal.service'
 import { EternalItems } from './constants/eternal-item.constants'
+import { TelegramBot } from './bot/telegram.bot'
 
 export default class App {
   public app: express.Application
   public env: string
   public port: string | number
+  private bot: TelegramBot
 
   constructor(routes: Routes[]) {
     this.app = express()
@@ -26,6 +28,8 @@ export default class App {
     this.initializeErrorHandling()
     this.initializeHealthCheck()
     this.initializeCronjob()
+    this.bot = new TelegramBot()
+    this.bot.start()
   }
 
   public listen() {
