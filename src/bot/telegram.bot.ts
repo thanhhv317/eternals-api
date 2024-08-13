@@ -64,7 +64,7 @@ export class TelegramBot {
   }
 
   private async harvertSheep(ctx: any) {
-    const result = await this.service.harvestResouce(EternalItems.woods, 10)
+    const result = await this.service.harvestResouce(EternalItems.wool, 10)
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
@@ -79,7 +79,7 @@ export class TelegramBot {
   }
 
   private async harvertButterflies(ctx: any) {
-    const result = await this.service.harvestResouce(EternalItems.woods, 10)
+    const result = await this.service.harvestResouce(EternalItems.butterfly, 10)
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
