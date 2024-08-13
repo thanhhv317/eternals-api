@@ -19,6 +19,18 @@ export class TelegramBot {
     this.bot.command('rabbit', (ctx: any) => {
       this.harvertRabbit(ctx)
     })
+
+    this.bot.command('wood', (ctx: any) => {
+      this.harvertWood(ctx)
+    })
+
+    this.bot.command('sheep', (ctx: any) => {
+      this.harvertSheep(ctx)
+    })
+
+    this.bot.command('butterfly', (ctx: any) => {
+      this.harvertButterflies(ctx)
+    })
   }
 
   private async harvertRabbit(ctx: any) {
@@ -26,12 +38,57 @@ export class TelegramBot {
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
-        `Harvert ${result.length} ${result.length > 1 ? 'rabbits': 'rabbit'} 🐇`,
+        `Harverted ${result.length} ${result.length > 1 ? 'rabbits': 'rabbit'} 🐇`,
       )
     } else {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
-        `Harvert rabbit failed ❌`,
+        `Rabbit harvest failed ❌`,
+      )
+    }
+  }
+
+  private async harvertWood(ctx: any) {
+    const result = await this.service.harvestResouce(EternalItems.woods, 10)
+    if (result && result?.length) {
+      this.bot.telegram.sendMessage(
+        ctx.chat.id,
+        `Harverted ${result.length} ${result.length > 1 ? 'woods': 'wood'} 🪵`,
+      )
+    } else {
+      this.bot.telegram.sendMessage(
+        ctx.chat.id,
+        `Wood harvest failed ❌`,
+      )
+    }
+  }
+
+  private async harvertSheep(ctx: any) {
+    const result = await this.service.harvestResouce(EternalItems.woods, 10)
+    if (result && result?.length) {
+      this.bot.telegram.sendMessage(
+        ctx.chat.id,
+        `Harverted ${result.length} ${result.length > 1 ? 'sheeps': 'sheep'} 🐏`,
+      )
+    } else {
+      this.bot.telegram.sendMessage(
+        ctx.chat.id,
+        `Sheep harvest failed ❌`,
+      )
+    }
+  }
+
+  private async harvertButterflies(ctx: any) {
+    const result = await this.service.harvestResouce(EternalItems.woods, 10)
+    if (result && result?.length) {
+      this.bot.telegram.sendMessage(
+        ctx.chat.id,
+        `Harverted ${result.length} ${result.length > 1 ? 'butterflies': 'butterfly'} 🦋`,
+      )
+    } else {
+      this.bot.telegram.sendMessage(
+        ctx.chat.id,
+        `Butterfly harvest failed ❌`,
       )
     }
   }
