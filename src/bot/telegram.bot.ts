@@ -31,6 +31,18 @@ export class TelegramBot {
     this.bot.command('butterfly', (ctx: any) => {
       this.harvertButterflies(ctx)
     })
+
+    this.bot.command('energy', (ctx: any) => {
+      this.getCurrentEnergy(ctx)
+    })
+  }
+
+  private async getCurrentEnergy(ctx: any) {
+    const result = await this.service.getEnergy()
+    return this.bot.telegram.sendMessage(
+      ctx.chat.id,
+      `Your energy is: ${result} ⚡️`
+    )
   }
 
   private async harvertRabbit(ctx: any) {
