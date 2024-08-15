@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { slice } from 'lodash'
 import { Service } from 'typedi'
-import { SECRET_TOKEN } from '@/config'
+import { SECOND_SECRET_TOKEN, SECRET_TOKEN } from '@/config'
 import { EternalItems } from '@/constants/eternal-item.constants'
 
 const harvest_ACTION = 114
@@ -34,10 +34,13 @@ export class EternalService {
       console.log("🚀 ~ EternalService ~ harvestResouce ~ energy:", energy)
       const { object }: { object: { birth: number, code: string, id: number }[] } = data.data
       const obj = object.filter((it) => it.code === item)
+      if (!obj.length) {
+        console.log(`Object not found`)
+        return
+      }
       const range = Math.min(Number(quantity), Math.trunc(energy / energyPerItem))
       for (let i = 0; i < range; i++) {
         console.log(`${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${harvest_ACTION}`)
-
         setTimeout(async () => {
           try {
             await axios({
@@ -80,13 +83,13 @@ export class EternalService {
     return data?.data?.stats?.energy || 0
   }
 
-  async jumpingRope() {
-    const petId = 4181
+  async jumpingRope(petId = 4181) {
     // init request:
+    const authorizationToken = this.getPetToken(petId)
     const { data } = await axios({
       method: "PUT",
       headers: {
-        'Authorization': SECRET_TOKEN
+        'Authorization': authorizationToken
       },
       data: {
         target: "USER_ASSET",
@@ -103,7 +106,7 @@ export class EternalService {
     const claimed = await axios({
       method: "POST",
       headers: {
-        'Authorization': SECRET_TOKEN
+        'Authorization': authorizationToken
       },
       data: {
         // easy
@@ -120,5 +123,14 @@ export class EternalService {
     })
 
     return result.data
+  }
+
+  private getPetToken(petId: number) {
+    if (petId === 4181) {
+      // holy cat mythic
+      return SECRET_TOKEN
+    } else {
+      return SECOND_SECRET_TOKEN
+    }
   }
 }
