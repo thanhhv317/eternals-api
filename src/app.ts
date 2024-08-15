@@ -132,11 +132,13 @@ export default class App {
     // play 🤾🏻‍♂️ jumping ropes
     scheduleJob('0 */15 * * * *', async () => {
       console.log('[Cron job] jumping rope ')
+      await service.jumpingRope()
+    })
+    
+    scheduleJob('0 */15 * * * *', async () => {
+      console.log('[Cron job] jumping rope pet2')
       const rarePetId = 7465
-      await Promise.allSettled([
-        service.jumpingRope(),
-        service.jumpingRope(rarePetId)
-      ])
+      await service.jumpingRope(rarePetId)
     })
   }
 }
