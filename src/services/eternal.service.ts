@@ -83,9 +83,29 @@ export class EternalService {
     return data?.data?.stats?.energy || 0
   }
 
-  async jumpingRope(petId = 4181) {
+  private getJumpingGameConfig(level: number) {
+    if (level === 1) {
+      return {
+        name: 'training_001',
+        result: 10
+      }
+    }
+    if (level === 2) {
+      return {
+        name: 'training_002',
+        result: 15
+      }
+    }
+  }
+
+  async jumpingRope(petId = 4181, level = 1) {
     // init request:
     const authorizationToken = this.getPetToken(petId)
+    const { name, result } = this.getJumpingGameConfig(level) 
+    // const level = `training_001` // level 1
+    // const levelPoint = 10
+    // const level = `training_002` // level 2
+    // const levelPoint = 15
     const { data } = await axios({
       method: "PUT",
       headers: {
@@ -96,7 +116,7 @@ export class EternalService {
         value: 2437,  // item id
         targetClean: "POOP"
       },
-      url: `${DOMAIN}/activity/training_001/pet/${petId}`
+      url: `${DOMAIN}/activity/${name}/pet/${petId}`
     })
 
     console.log("🚀 ~ EternalService ~ jumpingRope ~ data:", data)
@@ -110,19 +130,13 @@ export class EternalService {
       },
       data: {
         // easy
-        result: 10,
+        result,
         failed: 0
       },
       url: `${DOMAIN}/activity-history/${idHistory}/claimed`
     })
 
-    // get result
-    const result = await axios({
-      method: "GET",
-      url: `${DOMAIN}/user-pets/${petId}`
-    })
-
-    return result.data
+    return claimed?.data
   }
 
   private getPetToken(petId: number) {
