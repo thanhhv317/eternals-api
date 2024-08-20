@@ -35,6 +35,38 @@ export class TelegramBot {
     this.bot.command('energy', (ctx: any) => {
       this.getCurrentEnergy(ctx)
     })
+
+    this.bot.command('login', (ctx: any) => {
+      this.login(ctx)
+    })
+
+    this.bot.command('token', (ctx: any) => {
+      this.getToken(ctx)
+    })
+  }
+
+  async getToken(ctx: any) {
+    const result = this.service.getToken()
+    return this.bot.telegram.sendMessage(
+      ctx.chat.id,
+      result
+    )
+  }
+
+  async login(ctx: any) {
+    let message = 'Login failed.'
+    try {
+      const result = await this.service.login()
+      if (result) {
+        message = `Login successfully.`
+      }
+    } catch (error) {
+      console.log(`[BOT login]`, error)
+    }
+    return this.bot.telegram.sendMessage(
+      ctx.chat.id,
+      message
+    )
   }
 
   private async getCurrentEnergy(ctx: any) {
