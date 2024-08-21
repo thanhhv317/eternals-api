@@ -147,7 +147,7 @@ export class EternalService {
     }
   }
 
-  async startMiningTowerLevel2(petIds: string[]) {
+  async startMiningTowerLevel2(petIds: number[]) {
     const miningId = 35867
     try {
       const { data } = await axios({
