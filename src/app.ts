@@ -137,10 +137,11 @@ export default class App {
       await service.jumpingRope(mythicPetId, level)
     })
     
-    // scheduleJob('0 */15 * * * *', async () => {
-    //   console.log('[Cron job] jumping rope pet2')
-    //   const rarePetId = 7465
-    //   await service.jumpingRope(rarePetId)
-    // })
+    scheduleJob('* */16 * * * *', async () => {
+      console.log('[Cron job] jumping rope pet2')
+      const commonPetId = 8169
+      const level = 1
+      await service.jumpingRope(commonPetId, level)
+    })
   }
 }

@@ -9,31 +9,30 @@ const DOMAIN = 'https://api-core.eternals.game'
 
 @Service()
 export class EternalService {
-
   async getResource(item: string) {
     const { data } = await axios.get(`${DOMAIN}/user-maps/game/eternal?time=${Math.floor(Date.now() / 1000)}`, {
       headers: {
-        'Authorization': SECRET_TOKEN
+        Authorization: SECRET_TOKEN
       }
     })
     const { object }: { object: any[] } = data.data
-    const result = object.filter((it) => it.code === item)
+    const result = object.filter(it => it.code === item)
     return result
   }
 
   async harvestResouce(item: string, quantity = 1) {
-    console.log("🚀 ~ EternalService ~ harvestResouce ~ quantity:", quantity)
+    console.log('🚀 ~ EternalService ~ harvestResouce ~ quantity:', quantity)
     try {
       const { data } = await axios.get(`${DOMAIN}/user-maps/game/eternal?time=${Math.floor(Date.now() / 1000)}`, {
         headers: {
-          'Authorization': SECRET_TOKEN
+          Authorization: SECRET_TOKEN
         }
       })
       const energy = await this.getEnergy()
       const energyPerItem = this.getEnergyPerItem(item)
-      console.log("🚀 ~ EternalService ~ harvestResouce ~ energy:", energy)
-      const { object }: { object: { birth: number, code: string, id: number }[] } = data.data
-      const obj = object.filter((it) => it.code === item)
+      console.log('🚀 ~ EternalService ~ harvestResouce ~ energy:', energy)
+      const { object }: { object: { birth: number; code: string; id: number }[] } = data.data
+      const obj = object.filter(it => it.code === item)
       if (!obj.length) {
         console.log(`Object not found`)
         return
@@ -44,11 +43,11 @@ export class EternalService {
         setTimeout(async () => {
           try {
             await axios({
-              method: "POST",
+              method: 'POST',
               headers: {
-                'Authorization': SECRET_TOKEN,
+                Authorization: SECRET_TOKEN,
                 'content-type': 'application/json',
-                'origin': 'https://eternals-webgl.static.cyborg.game',
+                origin: 'https://eternals-webgl.static.cyborg.game'
               },
               url: `${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${harvest_ACTION}`
             })
@@ -74,9 +73,9 @@ export class EternalService {
 
   async getEnergy() {
     const { data } = await axios({
-      method: "GET",
+      method: 'GET',
       headers: {
-        'Authorization': SECRET_TOKEN
+        Authorization: SECRET_TOKEN
       },
       url: `${DOMAIN}/game-profiles?gameKey=eternal`
     })
@@ -101,32 +100,32 @@ export class EternalService {
   async jumpingRope(petId = 4181, level = 1) {
     // init request:
     const authorizationToken = this.getPetToken(petId)
-    const { name, result } = this.getJumpingGameConfig(level) 
+    const { name, result } = this.getJumpingGameConfig(level)
     // const level = `training_001` // level 1
     // const levelPoint = 10
     // const level = `training_002` // level 2
     // const levelPoint = 15
     const { data } = await axios({
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        'Authorization': authorizationToken
+        Authorization: authorizationToken
       },
       data: {
-        target: "USER_ASSET",
-        value: 2437,  // item id
-        targetClean: "POOP"
+        target: 'USER_ASSET',
+        value: 2437, // item id
+        targetClean: 'POOP'
       },
       url: `${DOMAIN}/activity/${name}/pet/${petId}`
     })
 
-    console.log("🚀 ~ EternalService ~ jumpingRope ~ data:", data)
+    console.log('🚀 ~ EternalService ~ jumpingRope ~ data:', data)
     const { idHistory } = data.data
 
     // claimed
     const claimed = await axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        'Authorization': authorizationToken
+        Authorization: authorizationToken
       },
       data: {
         // easy
@@ -145,6 +144,43 @@ export class EternalService {
       return SECRET_TOKEN
     } else {
       return SECOND_SECRET_TOKEN
+    }
+  }
+
+  async startMiningTowerLevel2(petIds: string[]) {
+    const miningId = 35867
+    try {
+      const { data } = await axios({
+        method: 'POST',
+        url: `${DOMAIN}/user-map-objects/${miningId}/start-mining/start_mining_tower_lvl_2`,
+        headers: {
+          Authorization: SECRET_TOKEN
+        },
+        data: {
+          listPet: petIds
+        }
+      })
+
+      if (data?.data) {
+        return data.data
+      }
+    } catch (error) {
+      throw new Error(error?.message)
+    }
+  }
+
+  async endMiningTownerLevel2() {
+    const miningId = 35867
+    try {
+      const { data } = await axios({
+        method: 'POST',
+        url: `${DOMAIN}/user-map-objects/${miningId}/end-mining/end_mining_tower_lvl_2`
+      })
+      if (data?.data) {
+        return data.data
+      }
+    } catch (error) {
+      throw new Error(error?.message)
     }
   }
 }
