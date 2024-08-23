@@ -145,18 +145,18 @@ export default class App {
     })
 
     // Spirit claim 🌠
-    scheduleJob('0 5 0 * * *', async () => {
-      console.log('[Cron job] claim spirit')
-      await service.endMiningTownerLevel2()
-      const petIds = [4181, 8169]
-      await service.startMiningTowerLevel2(petIds)
-    })
+    // scheduleJob('0 5 0 * * *', async () => {
+    //   console.log('[Cron job] claim spirit')
+    //   await service.endMiningTownerLevel2()
+    //   const petIds = [4181, 8169]
+    //   await service.startMiningTowerLevel2(petIds)
+    // })
 
-    scheduleJob('0 5 3 * * *', async () => {
-      console.log('[Cron job] claim spirit')
-      await service.endMiningTownerLevel2()
-      const petIds = [4181, 8169]
-      await service.startMiningTowerLevel2(petIds)
-    })
+    // scheduleJob('0 5 3 * * *', async () => {
+    //   console.log('[Cron job] claim spirit')
+    //   await service.endMiningTownerLevel2()
+    //   const petIds = [4181, 8169]
+    //   await service.startMiningTowerLevel2(petIds)
+    // })
   }
 }

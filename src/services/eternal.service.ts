@@ -154,7 +154,9 @@ export class EternalService {
         method: 'POST',
         url: `${DOMAIN}/user-map-objects/${miningId}/start-mining/start_mining_tower_lvl_2`,
         headers: {
-          Authorization: SECRET_TOKEN
+          Authorization: SECRET_TOKEN,
+          'content-type': 'application/json',
+          origin: 'https://eternals-webgl.static.cyborg.game',
         },
         data: {
           listPet: petIds
@@ -174,7 +176,12 @@ export class EternalService {
     try {
       const { data } = await axios({
         method: 'POST',
-        url: `${DOMAIN}/user-map-objects/${miningId}/end-mining/end_mining_tower_lvl_2`
+        url: `${DOMAIN}/user-map-objects/${miningId}/end-mining/end_mining_tower_lvl_2`,
+        headers: {
+          'content-type': 'application/json',
+          origin: 'https://eternals-webgl.static.cyborg.game',
+          Authorization: SECRET_TOKEN
+        }
       })
       if (data?.data) {
         return data.data
