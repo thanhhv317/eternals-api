@@ -95,6 +95,12 @@ export class EternalService {
         result: 15
       }
     }
+    if (level === 3) {
+      return {
+        name: 'training_003',
+        result: 20
+      }
+    }
   }
 
   async jumpingRope(petId = 4181, level = 1) {
