@@ -65,7 +65,7 @@ export class TelegramBot {
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
-        `Harverted ${result.length} ${result.length > 1 ? 'rabbits': 'rabbit'} 🐇`,
+        `Harvested ${result.length} ${result.length > 1 ? 'rabbits': 'rabbit'} 🐇`,
       )
     } else {
       this.bot.telegram.sendMessage(
@@ -84,7 +84,7 @@ export class TelegramBot {
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
-        `Harverted ${result.length} ${result.length > 1 ? 'woods': 'wood'} 🪵`,
+        `Harvested ${result.length} ${result.length > 1 ? 'woods': 'wood'} 🪵`,
       )
     } else {
       this.bot.telegram.sendMessage(
@@ -103,7 +103,7 @@ export class TelegramBot {
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
-        `Harverted ${result.length} ${result.length > 1 ? 'sheeps': 'sheep'} 🐏`,
+        `Harvested ${result.length} ${result.length > 1 ? 'sheeps': 'sheep'} 🐏`,
       )
     } else {
       this.bot.telegram.sendMessage(
@@ -122,7 +122,7 @@ export class TelegramBot {
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
-        `Harverted ${result.length} ${result.length > 1 ? 'butterflies': 'butterfly'} 🦋`,
+        `Harvested ${result.length} ${result.length > 1 ? 'butterflies': 'butterfly'} 🦋`,
       )
     } else {
       this.bot.telegram.sendMessage(

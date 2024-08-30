@@ -4,7 +4,10 @@ import { Service } from 'typedi'
 import { SECOND_SECRET_TOKEN, SECRET_TOKEN } from '@/config'
 import { EternalItems } from '@/constants/eternal-item.constants'
 
-const harvest_ACTION = 114
+const HARVEST_ACTION = {
+  1: 114,
+  2: 136
+}
 const DOMAIN = 'https://api-core.eternals.game'
 
 @Service()
@@ -39,9 +42,10 @@ export class EternalService {
         console.log(`Object not found`)
         return
       }
+      const actionNumber = HARVEST_ACTION[accountNumber]
       const range = Math.min(Number(quantity), Math.trunc(energy / energyPerItem))
       for (let i = 0; i < range; i++) {
-        console.log(`${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${harvest_ACTION}`)
+        console.log(`${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${actionNumber}`)
         setTimeout(async () => {
           try {
             await axios({
@@ -51,7 +55,7 @@ export class EternalService {
                 'content-type': 'application/json',
                 origin: 'https://eternals-webgl.static.cyborg.game'
               },
-              url: `${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${harvest_ACTION}`
+              url: `${DOMAIN}/user-map-objects/${obj[i].id}/harvest/${actionNumber}`
             })
           } catch (error) {
             throw new Error(error?.data || error?.message)
