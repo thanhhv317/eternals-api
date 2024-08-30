@@ -1,6 +1,6 @@
 import Container from "typedi";
 import { Telegraf } from "telegraf";
-import { BOT_TOKEN } from "../config";
+import { BOT_TOKEN, TELE_CHAT_ID } from "../config";
 import { EternalService } from "../services/eternal.service";
 import { EternalItems } from "@/constants/eternal-item.constants";
 
@@ -38,15 +38,30 @@ export class TelegramBot {
   }
 
   private async getCurrentEnergy(ctx: any) {
-    const result = await this.service.getEnergy()
-    return this.bot.telegram.sendMessage(
-      ctx.chat.id,
-      `Your energy is: ${result} ⚡️`
-    )
+    try {
+      let accountNumber = 2
+      if (ctx.chat.id === parseInt(TELE_CHAT_ID)) {
+        accountNumber = 1
+      }
+      const result = await this.service.getEnergy(accountNumber)
+      return this.bot.telegram.sendMessage(
+        ctx.chat.id,
+        `Your energy is: ${result} ⚡️`
+      )
+    } catch (error) {
+      return  this.bot.telegram.sendMessage(
+        ctx.chat.id,
+        `Tạch tạch tạch`
+      )
+    }
   }
 
   private async harvertRabbit(ctx: any) {
-    const result = await this.service.harvestResouce(EternalItems.meatRabbit, 5)
+    let accountNumber = 2
+    if (ctx.chat.id === parseInt(TELE_CHAT_ID)) {
+      accountNumber = 1
+    }
+    const result = await this.service.harvestResouce(EternalItems.meatRabbit, 5, accountNumber)
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
@@ -61,7 +76,11 @@ export class TelegramBot {
   }
 
   private async harvertWood(ctx: any) {
-    const result = await this.service.harvestResouce(EternalItems.woods, 10)
+    let accountNumber = 2
+    if (ctx.chat.id === parseInt(TELE_CHAT_ID)) {
+      accountNumber = 1
+    }
+    const result = await this.service.harvestResouce(EternalItems.woods, 10, accountNumber)
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
@@ -76,7 +95,11 @@ export class TelegramBot {
   }
 
   private async harvertSheep(ctx: any) {
-    const result = await this.service.harvestResouce(EternalItems.wool, 10)
+    let accountNumber = 2
+    if (ctx.chat.id === parseInt(TELE_CHAT_ID)) {
+      accountNumber = 1
+    }
+    const result = await this.service.harvestResouce(EternalItems.wool, 10, accountNumber)
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,
@@ -91,7 +114,11 @@ export class TelegramBot {
   }
 
   private async harvertButterflies(ctx: any) {
-    const result = await this.service.harvestResouce(EternalItems.butterfly, 10)
+    let accountNumber = 2
+    if (ctx.chat.id === parseInt(TELE_CHAT_ID)) {
+      accountNumber = 1
+    }
+    const result = await this.service.harvestResouce(EternalItems.butterfly, 10, accountNumber)
     if (result && result?.length) {
       this.bot.telegram.sendMessage(
         ctx.chat.id,

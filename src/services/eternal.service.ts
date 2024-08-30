@@ -20,15 +20,17 @@ export class EternalService {
     return result
   }
 
-  async harvestResouce(item: string, quantity = 1) {
+  async harvestResouce(item: string, quantity = 1, accountNumber = 1) {
     console.log('🚀 ~ EternalService ~ harvestResouce ~ quantity:', quantity)
+
+    const authorizationToken = this.getPetToken(accountNumber)
     try {
       const { data } = await axios.get(`${DOMAIN}/user-maps/game/eternal?time=${Math.floor(Date.now() / 1000)}`, {
         headers: {
-          Authorization: SECRET_TOKEN
+          Authorization: authorizationToken
         }
       })
-      const energy = await this.getEnergy()
+      const energy = await this.getEnergy(accountNumber)
       const energyPerItem = this.getEnergyPerItem(item)
       console.log('🚀 ~ EternalService ~ harvestResouce ~ energy:', energy)
       const { object }: { object: { birth: number; code: string; id: number }[] } = data.data
@@ -45,7 +47,7 @@ export class EternalService {
             await axios({
               method: 'POST',
               headers: {
-                Authorization: SECRET_TOKEN,
+                Authorization: authorizationToken,
                 'content-type': 'application/json',
                 origin: 'https://eternals-webgl.static.cyborg.game'
               },
@@ -71,11 +73,12 @@ export class EternalService {
     return 4
   }
 
-  async getEnergy() {
+  async getEnergy(accountNumber = 1) {
+    const authorizationToken = this.getPetToken(accountNumber)
     const { data } = await axios({
       method: 'GET',
       headers: {
-        Authorization: SECRET_TOKEN
+        Authorization: authorizationToken
       },
       url: `${DOMAIN}/game-profiles?gameKey=eternal`
     })
@@ -103,9 +106,9 @@ export class EternalService {
     }
   }
 
-  async jumpingRope(petId = 4181, level = 1) {
+  async jumpingRope(petId = 4181, level = 1, accountNumber = 1) {
     // init request:
-    const authorizationToken = this.getPetToken(petId)
+    const authorizationToken = this.getPetToken(accountNumber)
     const { name, result } = this.getJumpingGameConfig(level)
     // const level = `training_001` // level 1
     // const levelPoint = 10
@@ -144,9 +147,8 @@ export class EternalService {
     return claimed?.data
   }
 
-  private getPetToken(petId: number) {
-    if (petId === 4181) {
-      // holy cat mythic
+  private getPetToken(accountNumber: number) {
+    if (accountNumber === 1) {
       return SECRET_TOKEN
     } else {
       return SECOND_SECRET_TOKEN

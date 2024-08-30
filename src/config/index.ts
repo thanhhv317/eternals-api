@@ -3,4 +3,4 @@ dotenv.config()
 
 export const SECRET_TOKEN = `Bearer ${process.env.SECRET_TOKEN}`
 export const SECOND_SECRET_TOKEN = `Bearer ${process.env.SECOND_SECRET_TOKEN}`
-export const { PORT, BOT_TOKEN } = process.env
+export const { PORT, BOT_TOKEN, TELE_CHAT_ID } = process.env

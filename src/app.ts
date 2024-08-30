@@ -71,66 +71,81 @@ export default class App {
     scheduleJob('0 0 16 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.wool, 10, 2)
     })
     scheduleJob('0 0 17 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.wool, 10, 2)
     })
     scheduleJob('0 0 18 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.wool, 10, 2)
     })
     scheduleJob('0 0 19 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.wool, 10, 2)
     })
     scheduleJob('0 0 20 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.wool, 10, 2)
     })
   
     // 🪵 - 3 energy
     scheduleJob('0 0 21 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
       await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 22 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
       await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 23 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
       await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 0 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
       await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 1 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
       await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.woods, 10, 2)
     })
 
     // 🦋 - 4 energy
     scheduleJob('0 0 2 * * *', async () => {
       console.log('[Cron job] harverting 10 butterfly')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.butterfly, 10, 2)
     })
     scheduleJob('0 0 3 * * *', async () => {
       console.log('[Cron job] harverting 10 butterfly')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.butterfly, 10, 2)
     })
     scheduleJob('0 0 4 * * *', async () => {
       console.log('[Cron job] harverting 10 butterflies')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.butterfly, 10, 2)
     })
     scheduleJob('0 0 5 * * *', async () => {
       console.log('[Cron job] harverting 10 butterflies')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.butterfly, 10, 2)
     })
     scheduleJob('0 0 6 * * *', async () => {
       console.log('[Cron job] harverting 10 butterflies')
       await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.butterfly, 10, 2)
     })
 
     // play 🤾🏻‍♂️ jumping ropes
@@ -138,15 +153,30 @@ export default class App {
       console.log('[Cron job] jumping rope ')
       const mythicPetId = 4181
       const level = 2
-      await service.jumpingRope(mythicPetId, level)
+      const accountNumber = 1
+      await service.jumpingRope(mythicPetId, level, accountNumber)
+
+      console.log('[Cron job] jumping rope pet Quoc 1')
+      await service.jumpingRope(3364, 2, 2)
+     
     })
     
     scheduleJob('* */16 * * * *', async () => {
-      console.log('[Cron job] jumping rope pet2')
+      console.log('[Cron job] jumping rope pet 2')
       const commonPetId = 8169
       const level = 2
-      await service.jumpingRope(commonPetId, level)
+      const accountNumber = 1
+      await service.jumpingRope(commonPetId, level, accountNumber)
+
+      console.log('[Cron job] jumping rope pet Quoc 2')
+      await service.jumpingRope(3447, 2, 2)
     })
+
+    scheduleJob('* */17 * * * *', async () => {
+      console.log('[Cron job] jumping rope pet Quoc 3')
+      await service.jumpingRope(7639, 1, 2)
+    })
+
 
     // Spirit claim 🌠
     // scheduleJob('0 5 0 * * *', async () => {
