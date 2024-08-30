@@ -107,44 +107,48 @@ export class EternalService {
   }
 
   async jumpingRope(petId = 4181, level = 1, accountNumber = 1) {
-    // init request:
-    const authorizationToken = this.getPetToken(accountNumber)
-    const { name, result } = this.getJumpingGameConfig(level)
-    // const level = `training_001` // level 1
-    // const levelPoint = 10
-    // const level = `training_002` // level 2
-    // const levelPoint = 15
-    const { data } = await axios({
-      method: 'PUT',
-      headers: {
-        Authorization: authorizationToken
-      },
-      data: {
-        target: 'USER_ASSET',
-        value: 2437, // item id
-        targetClean: 'POOP'
-      },
-      url: `${DOMAIN}/activity/${name}/pet/${petId}`
-    })
+    try {
+      // init request:
+      const authorizationToken = this.getPetToken(accountNumber)
+      const { name, result } = this.getJumpingGameConfig(level)
+      // const level = `training_001` // level 1
+      // const levelPoint = 10
+      // const level = `training_002` // level 2
+      // const levelPoint = 15
+      const { data } = await axios({
+        method: 'PUT',
+        headers: {
+          Authorization: authorizationToken
+        },
+        data: {
+          target: 'USER_ASSET',
+          value: 2437, // item id
+          targetClean: 'POOP'
+        },
+        url: `${DOMAIN}/activity/${name}/pet/${petId}`
+      })
 
-    console.log('🚀 ~ EternalService ~ jumpingRope ~ data:', data)
-    const { idHistory } = data.data
+      console.log('🚀 ~ EternalService ~ jumpingRope ~ data:', data)
+      const { idHistory } = data.data
 
-    // claimed
-    const claimed = await axios({
-      method: 'POST',
-      headers: {
-        Authorization: authorizationToken
-      },
-      data: {
-        // easy
-        result,
-        failed: 0
-      },
-      url: `${DOMAIN}/activity-history/${idHistory}/claimed`
-    })
+      // claimed
+      const claimed = await axios({
+        method: 'POST',
+        headers: {
+          Authorization: authorizationToken
+        },
+        data: {
+          // easy
+          result,
+          failed: 0
+        },
+        url: `${DOMAIN}/activity-history/${idHistory}/claimed`
+      })
 
-    return claimed?.data
+      return claimed?.data
+    } catch (error) {
+      throw new Error(error?.data || error?.message)
+    }
   }
 
   private getPetToken(accountNumber: number) {
@@ -164,7 +168,7 @@ export class EternalService {
         headers: {
           Authorization: SECRET_TOKEN,
           'content-type': 'application/json',
-          origin: 'https://eternals-webgl.static.cyborg.game',
+          origin: 'https://eternals-webgl.static.cyborg.game'
         },
         data: {
           listPet: petIds
