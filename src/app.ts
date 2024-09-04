@@ -194,7 +194,7 @@ export default class App {
     // })
 
 
-    scheduleJob('* * */2 * * *', async () => {
+    scheduleJob('0 0 */2 * * *', async () => {
       console.log('[Cron job] Feed pet')
       await service.feedPet(4181, 1)
       await service.feedPet(8169, 1)
