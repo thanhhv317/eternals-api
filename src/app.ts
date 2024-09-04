@@ -161,7 +161,7 @@ export default class App {
      
     })
     
-    scheduleJob('* */16 * * * *', async () => {
+    scheduleJob('0 */16 * * * *', async () => {
       console.log('[Cron job] jumping rope pet 2')
       const commonPetId = 8169
       const level = 2
@@ -172,7 +172,7 @@ export default class App {
       await service.jumpingRope(3447, 2, 2)
     })
 
-    scheduleJob('* */17 * * * *', async () => {
+    scheduleJob('0 */17 * * * *', async () => {
       console.log('[Cron job] jumping rope pet Quoc 3')
       await service.jumpingRope(7639, 2, 2)
     })
