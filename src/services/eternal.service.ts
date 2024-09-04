@@ -225,4 +225,46 @@ export class EternalService {
       throw new Error(error?.message)
     }
   }
+
+  async getTotalMood(accountNumber: number) {
+    const authorizationToken = this.getPetToken(accountNumber)
+    const { data } = await axios.get(`${DOMAIN}/user-pets?page=1&perpage=10`, {
+      headers: {
+        Authorization: authorizationToken
+      }
+    })
+
+    const result = []
+    for (const item of data?.data) {
+      const { displayName } = item.attribute
+      const { total_moood } = item.stats
+      const icon = total_moood > 500 ? '🙂' : '😔' 
+      result.push(`${displayName}'s mood is ${total_moood} ${icon}`)
+    }
+
+    return result
+  }
+
+  async feedPet(petId: number, accountNumber: number) {
+    try {
+      const authorizationToken = this.getPetToken(accountNumber)
+  
+      const { data } = await axios({
+        method: 'PUT',
+        headers: {
+          Authorization: authorizationToken
+        },
+        data: {
+          target: 'USER_ASSET',
+          value: 29758, // becon 🥓
+          targetClean: 'POOP'
+        },
+        url: `${DOMAIN}/activity/feed_pet/pet/${petId}`
+      })
+
+      return data
+    } catch (error) {
+      throw new Error(error?.data || error?.message)
+    }
+  }
 }

@@ -192,5 +192,16 @@ export default class App {
     //   const petIds = [4181, 8169]
     //   await service.startMiningTowerLevel2(petIds)
     // })
+
+
+    scheduleJob('* * */2 * * *', async () => {
+      console.log('[Cron job] Feed pet')
+      await service.feedPet(4181, 1)
+      await service.feedPet(8169, 1)
+
+      await service.feedPet(3364, 2)
+      await service.feedPet(3447, 2)
+      await service.feedPet(7639, 2)
+    })
   }
 }
