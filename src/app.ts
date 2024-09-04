@@ -150,11 +150,11 @@ export default class App {
 
     // play 🤾🏻‍♂️ jumping ropes
     scheduleJob('0 */15 * * * *', async () => {
-      console.log('[Cron job] jumping rope ')
-      const mythicPetId = 4181
-      const level = 2
-      const accountNumber = 1
-      await service.jumpingRope(mythicPetId, level, accountNumber)
+      // console.log('[Cron job] jumping rope ')
+      // const mythicPetId = 4181
+      // const level = 2
+      // const accountNumber = 1
+      // await service.jumpingRope(mythicPetId, level, accountNumber)
 
       console.log('[Cron job] jumping rope pet Quoc 1')
       await service.jumpingRope(3364, 2, 2)
@@ -174,7 +174,7 @@ export default class App {
 
     scheduleJob('* */17 * * * *', async () => {
       console.log('[Cron job] jumping rope pet Quoc 3')
-      await service.jumpingRope(7639, 1, 2)
+      await service.jumpingRope(7639, 2, 2)
     })
 
 

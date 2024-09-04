@@ -90,6 +90,7 @@ export class EternalService {
   }
 
   private getJumpingGameConfig(level: number) {
+    // 2437
     if (level === 1) {
       return {
         name: 'training_001',
@@ -110,15 +111,33 @@ export class EternalService {
     }
   }
 
+  private getCalculatorGameConfig(level: number) {
+    // 2438
+    if (level === 1) {
+      return {
+        name: 'training_004',
+        result: 10
+      }
+    }
+    if (level === 2) {
+      return {
+        name: 'training_005',
+        result: 15
+      }
+    }
+    if (level === 3) {
+      return {
+        name: 'training_006',
+        result: 20
+      }
+    }
+  }
+
   async jumpingRope(petId = 4181, level = 1, accountNumber = 1) {
     try {
       // init request:
       const authorizationToken = this.getPetToken(accountNumber)
-      const { name, result } = this.getJumpingGameConfig(level)
-      // const level = `training_001` // level 1
-      // const levelPoint = 10
-      // const level = `training_002` // level 2
-      // const levelPoint = 15
+      const { name, result } = this.getCalculatorGameConfig(level)
       const { data } = await axios({
         method: 'PUT',
         headers: {
@@ -126,7 +145,7 @@ export class EternalService {
         },
         data: {
           target: 'USER_ASSET',
-          value: 2437, // item id
+          value: 2438, // item id
           targetClean: 'POOP'
         },
         url: `${DOMAIN}/activity/${name}/pet/${petId}`
