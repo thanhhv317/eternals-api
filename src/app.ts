@@ -93,7 +93,7 @@ export default class App {
       await service.harvestResouce(EternalItems.wool, 10)
       await service.harvestResouce(EternalItems.wool, 10, 2)
     })
-  
+
     // 🪵 - 3 energy
     scheduleJob('0 0 21 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
@@ -150,17 +150,16 @@ export default class App {
 
     // play 🤾🏻‍♂️ jumping ropes
     scheduleJob('0 */15 * * * *', async () => {
-      // console.log('[Cron job] jumping rope ')
-      // const mythicPetId = 4181
-      // const level = 2
-      // const accountNumber = 1
-      // await service.jumpingRope(mythicPetId, level, accountNumber)
+      console.log('[Cron job] jumping rope ')
+      const mythicPetId = 4181
+      const level = 2
+      const accountNumber = 1
+      await service.jumpingRope(mythicPetId, level, accountNumber)
 
       console.log('[Cron job] jumping rope pet Quoc 1')
       await service.jumpingRope(3364, 2, 2)
-     
     })
-    
+
     scheduleJob('0 */16 * * * *', async () => {
       console.log('[Cron job] jumping rope pet 2')
       const commonPetId = 8169
@@ -177,7 +176,6 @@ export default class App {
       await service.jumpingRope(7639, 2, 2)
     })
 
-
     // Spirit claim 🌠
     // scheduleJob('0 5 0 * * *', async () => {
     //   console.log('[Cron job] claim spirit')
@@ -193,15 +191,14 @@ export default class App {
     //   await service.startMiningTowerLevel2(petIds)
     // })
 
-
     scheduleJob('0 0 */2 * * *', async () => {
       console.log('[Cron job] Feed pet')
-      await service.feedPet(4181, 1)
-      await service.feedPet(8169, 1)
+      service.feedPet(4181, 1)
+      service.feedPet(8169, 1)
 
-      await service.feedPet(3364, 2)
-      await service.feedPet(3447, 2)
-      await service.feedPet(7639, 2)
+      service.feedPet(3364, 2)
+      service.feedPet(3447, 2)
+      service.feedPet(7639, 2)
     })
   }
 }

@@ -137,7 +137,7 @@ export class EternalService {
     try {
       // init request:
       const authorizationToken = this.getPetToken(accountNumber)
-      const { name, result } = this.getCalculatorGameConfig(level)
+      const { name, result } = this.getJumpingGameConfig(level)
       const { data } = await axios({
         method: 'PUT',
         headers: {
@@ -145,7 +145,7 @@ export class EternalService {
         },
         data: {
           target: 'USER_ASSET',
-          value: 2438, // item id
+          value: 2938, // item id
           targetClean: 'POOP'
         },
         url: `${DOMAIN}/activity/${name}/pet/${petId}`
@@ -248,7 +248,7 @@ export class EternalService {
   async feedPet(petId: number, accountNumber: number) {
     try {
       const authorizationToken = this.getPetToken(accountNumber)
-  
+      
       const { data } = await axios({
         method: 'PUT',
         headers: {
@@ -261,6 +261,9 @@ export class EternalService {
         },
         url: `${DOMAIN}/activity/feed_pet/pet/${petId}`
       })
+      if (data?.data){
+        console.log(`Feed pet done.`)
+      }
 
       return data
     } catch (error) {
