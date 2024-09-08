@@ -270,4 +270,30 @@ export class EternalService {
       throw new Error(error?.data || error?.message)
     }
   }
+
+  async hangout(petId: number, accountNumber: number) {
+    try {
+      const authorizationToken = this.getPetToken(accountNumber)
+      
+      const { data } = await axios({
+        method: 'PUT',
+        headers: {
+          Authorization: authorizationToken
+        },
+        data: {
+          target: 'USER_ASSET',
+          value: 2436, // Collar 
+          targetClean: 'POOP'
+        },
+        url: `${DOMAIN}/activity/hangout_003/pet/${petId}`
+      })
+      if (data?.data){
+        console.log(`Pet ${petId} hangout done.`)
+      }
+
+      return data
+    } catch (error) {
+      throw new Error(error?.data || error?.message)
+    }
+  }
 }

@@ -200,5 +200,15 @@ export default class App {
       service.feedPet(3447, 2)
       service.feedPet(7639, 2)
     })
+
+    scheduleJob('0 0 7 * * *', async () => {
+      console.log('[Cron job] Hangout pet')
+      service.hangout(4181, 1)
+      service.hangout(8169, 1)
+
+      service.hangout(3364, 2)
+      service.hangout(3447, 2)
+      service.hangout(7639, 2)
+    })
   }
 }
