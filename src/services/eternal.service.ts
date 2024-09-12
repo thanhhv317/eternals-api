@@ -286,40 +286,40 @@ export class EternalService {
       const { id: petId } = item
       const {  healthy, mood: hangoutPoint, waste, hunger } = item.stats
       await this.handleCleanHouse(waste, petId, authorizationToken)
-      await sleep(500)
+      await sleep(900)
       await this.handleHunger(hunger, petId, accountNumber, authorizationToken)
-      await sleep(500)
+      await sleep(900)
       await this.handleHangoutPoint(hangoutPoint, petId, accountNumber, authorizationToken)
-      await sleep(500)
+      await sleep(900)
       await this.handleHealthy(healthy, petId, authorizationToken)
-      await sleep(500)
+      await sleep(900)
     }
 
     return true
   }
 
   async handleCleanHouse(waste: WasteStats, petId: number, authorizationToken: string) {
-    console.log(`handleCleanHouse`)
+    console.log(`handleCleanHouse waste = ${waste}`)
     const { dirt, fur, poop, vomit } = waste
 
     for (let i = 0; i < dirt; i++) {
       await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.soap, CLEAN_PET_TYPE.DIRT)
-      await sleep(500)
+      await sleep(900)
     }
 
     for (let i = 0; i < fur; i++) {
       await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.broom, CLEAN_PET_TYPE.FUR)
-      await sleep(500)
+      await sleep(900)
     }
 
     for (let i = 0; i < poop; i++) {
       await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.poopShove, CLEAN_PET_TYPE.POOP)
-      await sleep(500)
+      await sleep(900)
     }
 
     for (let i = 0; i < vomit; i++) {
       await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.cleaningSpray, CLEAN_PET_TYPE.VOMIT)
-      await sleep(500)
+      await sleep(900)
     }
   }
 
@@ -342,22 +342,22 @@ export class EternalService {
   }
 
   async handleHealthy(healthyPoint: number, petId: number, authorizationToken: string) {
-    console.log(`handleHealthy`)
+    console.log(`handleHealthy healthyPoint: ${healthyPoint}`)
     if (healthyPoint === 2) {
-      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
+      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
     }
 
     if (healthyPoint === 1) {
-      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.antibiotics)
-      sleep(500)
       await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
+      sleep(900)
+      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
     }
 
     if (healthyPoint === 0) {
       await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.antibiotics)
-      sleep(500)
+      sleep(900)
       await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
-      sleep(500)
+      sleep(900)
       await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
     }
   }
