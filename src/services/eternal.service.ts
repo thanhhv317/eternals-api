@@ -3,11 +3,40 @@ import { slice } from 'lodash'
 import { Service } from 'typedi'
 import { SECOND_SECRET_TOKEN, SECRET_TOKEN } from '@/config'
 import { EternalItems } from '@/constants/eternal-item.constants'
+import { sleep } from '@/utils/function'
 
 const HARVEST_ACTION = {
   1: 114,
   2: 136
 }
+
+const HEALTH_ITEM = {
+  vitamin: 2428,
+  painkiller: 2429,
+  antibiotics: 2427
+}
+
+const CLEAN_PET_ITEM = {
+  broom: 2431, // FUR - 2431
+  soap: 1, // DIRT - 2430
+  poopShove: 2, // POOP - 2433
+  cleaningSpray: 3 // VOMIT - 2432
+}
+
+enum CLEAN_PET_TYPE {
+  FUR = 'FUR',
+  DIRT = 'DIRT',
+  POOP = 'POOP',
+  VOMIT = 'VOMIT'
+}
+
+type WasteStats = {
+  dirt: number
+  fur: number
+  poop: number
+  vomit: number
+}
+
 const DOMAIN = 'https://api-core.eternals.game'
 
 @Service()
@@ -237,18 +266,125 @@ export class EternalService {
     const result = []
     for (const item of data?.data) {
       const { displayName } = item.attribute
-      const { total_moood } = item.stats
-      const icon = total_moood > 500 ? '🙂' : '😔' 
-      result.push(`${displayName}'s mood is ${total_moood} ${icon}`)
+      const { total_mood } = item.stats
+      const icon = total_mood > 500 ? '🙂' : '😔'
+      result.push(`${displayName}'s mood is ${total_mood} ${icon}`)
     }
 
     return result
   }
 
-  async feedPet(petId: number, accountNumber: number) {
+  async recoverTotalMood(accountNumber: number) {
+    const authorizationToken = this.getPetToken(accountNumber)
+    const { data } = await axios.get(`${DOMAIN}/user-pets?page=1&perpage=10`, {
+      headers: {
+        Authorization: authorizationToken
+      }
+    })
+
+    for (const item of data?.data) {
+      const { id: petId } = item
+      const {  healthy, mood: hangoutPoint, waste, hunger } = item.stats
+      await this.handleCleanHouse(waste, petId, authorizationToken)
+      await sleep(500)
+      await this.handleHunger(hunger, petId, accountNumber, authorizationToken)
+      await sleep(500)
+      await this.handleHangoutPoint(hangoutPoint, petId, accountNumber, authorizationToken)
+      await sleep(500)
+      await this.handleHealthy(healthy, petId, authorizationToken)
+      await sleep(500)
+    }
+
+    return true
+  }
+
+  async handleCleanHouse(waste: WasteStats, petId: number, authorizationToken: string) {
+    console.log(`handleCleanHouse`)
+    const { dirt, fur, poop, vomit } = waste
+
+    for (let i = 0; i < dirt; i++) {
+      await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.soap, CLEAN_PET_TYPE.DIRT)
+      await sleep(500)
+    }
+
+    for (let i = 0; i < fur; i++) {
+      await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.broom, CLEAN_PET_TYPE.FUR)
+      await sleep(500)
+    }
+
+    for (let i = 0; i < poop; i++) {
+      await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.poopShove, CLEAN_PET_TYPE.POOP)
+      await sleep(500)
+    }
+
+    for (let i = 0; i < vomit; i++) {
+      await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.cleaningSpray, CLEAN_PET_TYPE.VOMIT)
+      await sleep(500)
+    }
+  }
+
+  async handleHunger(hungerPoint: number, petId: number, accountNumber: number, authorizationToken: string) {
+    console.log(`handleHunger`)
+    for (let i = hungerPoint; i < 450; i += 150) {
+      await this.feedPet(petId, accountNumber, authorizationToken)
+      await sleep(500)
+    }
+  }
+
+  async handleHangoutPoint(hangoutPoint: number, petId: number, accountNumber: number, authorizationToken: string) {
+    console.log(`handleHangoutPoint`)
+    if (hangoutPoint > 150) {
+      return
+    }
+
+    await this.hangout(petId, accountNumber, authorizationToken)
+    return
+  }
+
+  async handleHealthy(healthyPoint: number, petId: number, authorizationToken: string) {
+    console.log(`handleHealthy`)
+    if (healthyPoint === 2) {
+      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
+    }
+
+    if (healthyPoint === 1) {
+      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.antibiotics)
+      sleep(500)
+      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
+    }
+
+    if (healthyPoint === 0) {
+      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.antibiotics)
+      sleep(500)
+      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
+      sleep(500)
+      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
+    }
+  }
+
+  async takeMedicine(authorizationToken: string, petId: number, itemId: number) {
     try {
-      const authorizationToken = this.getPetToken(accountNumber)
-      
+      const { data } = await axios({
+        method: 'PUT',
+        headers: {
+          Authorization: authorizationToken
+        },
+        data: {
+          target: 'USER_ASSET',
+          value: itemId, // item id
+          targetClean: 'POOP'
+        },
+        url: `${DOMAIN}/activity/heal_pet/pet/${petId}`
+      })
+    } catch (error) {
+      console.log(error?.message)
+    }
+  }
+
+  async feedPet(petId: number, accountNumber: number, token = null) {
+    try {
+      const authorizationToken = token || this.getPetToken(accountNumber)
+
       const { data } = await axios({
         method: 'PUT',
         headers: {
@@ -261,7 +397,7 @@ export class EternalService {
         },
         url: `${DOMAIN}/activity/feed_pet/pet/${petId}`
       })
-      if (data?.data){
+      if (data?.data) {
         console.log(`Feed pet done.`)
       }
 
@@ -271,10 +407,10 @@ export class EternalService {
     }
   }
 
-  async hangout(petId: number, accountNumber: number) {
+  async hangout(petId: number, accountNumber: number, token = null) {
     try {
-      const authorizationToken = this.getPetToken(accountNumber)
-      
+      const authorizationToken = token || this.getPetToken(accountNumber)
+
       const { data } = await axios({
         method: 'PUT',
         headers: {
@@ -282,18 +418,37 @@ export class EternalService {
         },
         data: {
           target: 'USER_ASSET',
-          value: 2436, // Collar 
+          value: 2436, // Collar
           targetClean: 'POOP'
         },
         url: `${DOMAIN}/activity/hangout_003/pet/${petId}`
       })
-      if (data?.data){
+      if (data?.data) {
         console.log(`Pet ${petId} hangout done.`)
       }
 
       return data
     } catch (error) {
       throw new Error(error?.data || error?.message)
+    }
+  }
+
+  private async clearPet(authorizationToken: string, petId: number, itemId: number, type: string) {
+    try {
+      const { data } = await axios({
+        method: 'PUT',
+        headers: {
+          Authorization: authorizationToken
+        },
+        data: {
+          target: 'USER_ASSET',
+          value: itemId, // item id
+          targetClean: type
+        },
+        url: `${DOMAIN}/activity/clean_pet/pet/${petId}`
+      })
+    } catch (error) {
+      console.log(error?.message)
     }
   }
 }

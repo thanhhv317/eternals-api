@@ -1,8 +1,8 @@
-import Container from "typedi";
-import { Telegraf } from "telegraf";
-import { BOT_TOKEN, TELE_CHAT_ID } from "../config";
-import { EternalService } from "../services/eternal.service";
-import { EternalItems } from "@/constants/eternal-item.constants";
+import Container from 'typedi'
+import { Telegraf } from 'telegraf'
+import { BOT_TOKEN, TELE_CHAT_ID } from '../config'
+import { EternalService } from '../services/eternal.service'
+import { EternalItems } from '@/constants/eternal-item.constants'
 
 export class TelegramBot {
   private readonly bot: Telegraf
@@ -13,7 +13,7 @@ export class TelegramBot {
   }
 
   start() {
-    console.log("[Telegram bot] Launch")
+    console.log('[Telegram bot] Launch')
     this.bot.launch()
 
     this.bot.command('rabbit', (ctx: any) => {
@@ -35,6 +35,46 @@ export class TelegramBot {
     this.bot.command('energy', (ctx: any) => {
       this.getCurrentEnergy(ctx)
     })
+
+    this.bot.command('health', (ctx: any) => {
+      this.getTotalHealth(ctx)
+    })
+
+    this.bot.command('recoverHealth', (ctx: any) => {
+      this.autoTakeCareHealth(ctx)
+    })
+  }
+
+  private async autoTakeCareHealth(ctx: any){
+    try {
+      let accountNumber = 2
+      if (ctx.chat.id === parseInt(TELE_CHAT_ID)) {
+        accountNumber = 1
+      }
+      await this.service.recoverTotalMood(accountNumber)
+      return this.bot.telegram.sendMessage(ctx.chat.id, `All pets are recovering well.`)
+      
+    } catch (error) {
+      return this.bot.telegram.sendMessage(ctx.chat.id, `Tạch tạch tạch`)
+    }
+  }
+
+  private async getTotalHealth(ctx: any) {
+    try {
+      let accountNumber = 2
+      if (ctx.chat.id === parseInt(TELE_CHAT_ID)) {
+        accountNumber = 1
+      }
+      const result = await this.service.getTotalMood(accountNumber)
+      if (!result?.length) {
+        return
+      }
+      for (const item of result) {
+        this.bot.telegram.sendMessage(ctx.chat.id, item)
+      }
+    } catch (error) {
+      return this.bot.telegram.sendMessage(ctx.chat.id, `Tạch tạch tạch`)
+    }
   }
 
   private async getCurrentEnergy(ctx: any) {
@@ -44,15 +84,9 @@ export class TelegramBot {
         accountNumber = 1
       }
       const result = await this.service.getEnergy(accountNumber)
-      return this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Your energy is: ${result} ⚡️`
-      )
+      return this.bot.telegram.sendMessage(ctx.chat.id, `Your energy is: ${result} ⚡️`)
     } catch (error) {
-      return  this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Tạch tạch tạch`
-      )
+      return this.bot.telegram.sendMessage(ctx.chat.id, `Tạch tạch tạch`)
     }
   }
 
@@ -63,15 +97,9 @@ export class TelegramBot {
     }
     const result = await this.service.harvestResouce(EternalItems.meatRabbit, 5, accountNumber)
     if (result && result?.length) {
-      this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Harvested ${result.length} ${result.length > 1 ? 'rabbits': 'rabbit'} 🐇`,
-      )
+      this.bot.telegram.sendMessage(ctx.chat.id, `Harvested ${result.length} ${result.length > 1 ? 'rabbits' : 'rabbit'} 🐇`)
     } else {
-      this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Rabbit harvest failed ❌`,
-      )
+      this.bot.telegram.sendMessage(ctx.chat.id, `Rabbit harvest failed ❌`)
     }
   }
 
@@ -82,15 +110,9 @@ export class TelegramBot {
     }
     const result = await this.service.harvestResouce(EternalItems.woods, 10, accountNumber)
     if (result && result?.length) {
-      this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Harvested ${result.length} ${result.length > 1 ? 'woods': 'wood'} 🪵`,
-      )
+      this.bot.telegram.sendMessage(ctx.chat.id, `Harvested ${result.length} ${result.length > 1 ? 'woods' : 'wood'} 🪵`)
     } else {
-      this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Wood harvest failed ❌`,
-      )
+      this.bot.telegram.sendMessage(ctx.chat.id, `Wood harvest failed ❌`)
     }
   }
 
@@ -101,15 +123,9 @@ export class TelegramBot {
     }
     const result = await this.service.harvestResouce(EternalItems.wool, 10, accountNumber)
     if (result && result?.length) {
-      this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Harvested ${result.length} ${result.length > 1 ? 'sheeps': 'sheep'} 🐏`,
-      )
+      this.bot.telegram.sendMessage(ctx.chat.id, `Harvested ${result.length} ${result.length > 1 ? 'sheeps' : 'sheep'} 🐏`)
     } else {
-      this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Sheep harvest failed ❌`,
-      )
+      this.bot.telegram.sendMessage(ctx.chat.id, `Sheep harvest failed ❌`)
     }
   }
 
@@ -120,15 +136,9 @@ export class TelegramBot {
     }
     const result = await this.service.harvestResouce(EternalItems.butterfly, 10, accountNumber)
     if (result && result?.length) {
-      this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Harvested ${result.length} ${result.length > 1 ? 'butterflies': 'butterfly'} 🦋`,
-      )
+      this.bot.telegram.sendMessage(ctx.chat.id, `Harvested ${result.length} ${result.length > 1 ? 'butterflies' : 'butterfly'} 🦋`)
     } else {
-      this.bot.telegram.sendMessage(
-        ctx.chat.id,
-        `Butterfly harvest failed ❌`,
-      )
+      this.bot.telegram.sendMessage(ctx.chat.id, `Butterfly harvest failed ❌`)
     }
   }
 }
