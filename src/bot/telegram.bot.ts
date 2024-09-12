@@ -40,7 +40,7 @@ export class TelegramBot {
       this.getTotalHealth(ctx)
     })
 
-    this.bot.command('recoverHealth', (ctx: any) => {
+    this.bot.command('restore', (ctx: any) => {
       this.autoTakeCareHealth(ctx)
     })
   }
