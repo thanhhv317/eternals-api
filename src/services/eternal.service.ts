@@ -18,9 +18,9 @@ const HEALTH_ITEM = {
 
 const CLEAN_PET_ITEM = {
   broom: 2431, // FUR - 2431
-  soap: 1, // DIRT - 2430
-  poopShove: 2, // POOP - 2433
-  cleaningSpray: 3 // VOMIT - 2432
+  soap: 2430, // DIRT - 2430
+  poopShove: 2433, // POOP - 2433
+  cleaningSpray: 2432 // VOMIT - 2432
 }
 
 enum CLEAN_PET_TYPE {
@@ -284,7 +284,7 @@ export class EternalService {
 
     for (const item of data?.data) {
       const { id: petId } = item
-      const {  healthy, mood: hangoutPoint, waste, hunger } = item.stats
+      const { healthy, mood: hangoutPoint, waste, hunger } = item.stats
       await this.handleCleanHouse(waste, petId, authorizationToken)
       await sleep(900)
       await this.handleHunger(hunger, petId, accountNumber, authorizationToken)
@@ -343,23 +343,15 @@ export class EternalService {
 
   async handleHealthy(healthyPoint: number, petId: number, authorizationToken: string) {
     console.log(`handleHealthy healthyPoint: ${healthyPoint}`)
-    if (healthyPoint === 2) {
-      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
+    if (healthyPoint === 3) {
+      return
     }
 
-    if (healthyPoint === 1) {
-      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
-      sleep(900)
-      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
-    }
-
-    if (healthyPoint === 0) {
-      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.antibiotics)
-      sleep(900)
-      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
-      sleep(900)
-      await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
-    }
+    await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.antibiotics)
+    sleep(900)
+    await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
+    sleep(900)
+    await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
   }
 
   async takeMedicine(authorizationToken: string, petId: number, itemId: number) {
@@ -377,7 +369,7 @@ export class EternalService {
         url: `${DOMAIN}/activity/heal_pet/pet/${petId}`
       })
     } catch (error) {
-      console.log(error?.message)
+      console.log(error)
     }
   }
 
