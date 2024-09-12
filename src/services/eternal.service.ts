@@ -299,7 +299,7 @@ export class EternalService {
   }
 
   async handleCleanHouse(waste: WasteStats, petId: number, authorizationToken: string) {
-    console.log(`handleCleanHouse waste = ${waste}`)
+    console.log(`handleCleanHouse waste = ${JSON.stringify(waste, null, 2)}`)
     const { dirt, fur, poop, vomit } = waste
 
     for (let i = 0; i < dirt; i++) {
