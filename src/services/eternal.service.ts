@@ -352,6 +352,7 @@ export class EternalService {
 
   async takeMedicine(authorizationToken: string, petId: number, itemId: number) {
     try {
+      console.log(`takeMedicine: ${itemId}`)
       const { data } = await axios({
         method: 'PUT',
         headers: {
@@ -365,7 +366,7 @@ export class EternalService {
         url: `${DOMAIN}/activity/heal_pet/pet/${petId}`
       })
     } catch (error) {
-      console.log(error)
+      console.log(error?.message)
     }
   }
 
