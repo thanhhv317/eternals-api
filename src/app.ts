@@ -90,19 +90,19 @@ export default class App {
     })
     scheduleJob('0 0 20 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
-      await service.harvestResouce(EternalItems.wool, 10)
+      // await service.harvestResouce(EternalItems.wool, 10)
       await service.harvestResouce(EternalItems.wool, 10, 2)
     })
 
     // 🪵 - 3 energy
     scheduleJob('0 0 21 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
-      await service.harvestResouce(EternalItems.woods, 10)
+      // await service.harvestResouce(EternalItems.woods, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 22 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
-      await service.harvestResouce(EternalItems.woods, 10)
+      // await service.harvestResouce(EternalItems.woods, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 23 * * *', async () => {
