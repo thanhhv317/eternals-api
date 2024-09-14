@@ -289,9 +289,9 @@ export class EternalService {
       await sleep(900)
       await this.handleHunger(hunger, petId, accountNumber, authorizationToken)
       await sleep(900)
-      await this.handleHangoutPoint(hangoutPoint, petId, accountNumber, authorizationToken)
-      await sleep(900)
       await this.handleHealthy(healthy, petId, authorizationToken)
+      await sleep(900)
+      await this.handleHangoutPoint(hangoutPoint, petId, accountNumber, authorizationToken)
       await sleep(900)
     }
 
@@ -343,10 +343,6 @@ export class EternalService {
 
   async handleHealthy(healthyPoint: number, petId: number, authorizationToken: string) {
     console.log(`handleHealthy healthyPoint: ${healthyPoint}`)
-    if (healthyPoint === 3) {
-      return
-    }
-
     await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.antibiotics)
     sleep(900)
     await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
