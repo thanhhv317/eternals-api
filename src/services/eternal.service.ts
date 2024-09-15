@@ -283,6 +283,7 @@ export class EternalService {
     })
 
     for (const item of data?.data) {
+      console.log("🚀 ~ EternalService ~ recoverTotalMood ~ item:", item)
       const { id: petId } = item
       const { healthy, mood: hangoutPoint, waste, hunger } = item.stats
       await this.handleCleanHouse(waste, petId, authorizationToken)
@@ -344,9 +345,9 @@ export class EternalService {
   async handleHealthy(healthyPoint: number, petId: number, authorizationToken: string) {
     console.log(`handleHealthy healthyPoint: ${healthyPoint}`)
     await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.antibiotics)
-    sleep(900)
+    await sleep(1000)
     await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.painkiller)
-    sleep(900)
+    await sleep(1000)
     await this.takeMedicine(authorizationToken, petId, HEALTH_ITEM.vitamin)
   }
 

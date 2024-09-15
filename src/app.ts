@@ -67,6 +67,7 @@ export default class App {
 
   private initializeCronjob() {
     const service = Container.get(EternalService)
+
     // 🐏 sheeps - 4 energy
     scheduleJob('0 0 16 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
