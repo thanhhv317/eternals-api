@@ -17,7 +17,7 @@ const HEALTH_ITEM = {
 }
 
 const CLEAN_PET_ITEM = {
-  broom: 2431, // FUR - 2431
+  broom: 2431, // FUR, WEB - 2431
   soap: 2430, // DIRT - 2430
   poopShove: 2433, // POOP - 2433
   cleaningSpray: 2432 // VOMIT - 2432
@@ -25,8 +25,12 @@ const CLEAN_PET_ITEM = {
 
 enum CLEAN_PET_TYPE {
   FUR = 'FUR',
+  WEB = 'WEB',
+
   DIRT = 'DIRT',
+
   POOP = 'POOP',
+
   VOMIT = 'VOMIT'
 }
 
@@ -283,7 +287,7 @@ export class EternalService {
     })
 
     for (const item of data?.data) {
-      console.log("🚀 ~ EternalService ~ recoverTotalMood ~ item:", item)
+      console.log('🚀 ~ EternalService ~ recoverTotalMood ~ item:', item)
       const { id: petId } = item
       const { healthy, mood: hangoutPoint, waste, hunger } = item.stats
       await this.handleCleanHouse(waste, petId, authorizationToken)
@@ -310,6 +314,8 @@ export class EternalService {
 
     for (let i = 0; i < fur; i++) {
       await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.broom, CLEAN_PET_TYPE.FUR)
+      await sleep(900)
+      await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.broom, CLEAN_PET_TYPE.WEB)
       await sleep(900)
     }
 
@@ -408,10 +414,11 @@ export class EternalService {
         },
         data: {
           target: 'USER_ASSET',
-          value: 2436, // Collar
+          value: 2435, // Frisbee Disc
+          // value: 2436, // Collar
           targetClean: 'POOP'
         },
-        url: `${DOMAIN}/activity/hangout_003/pet/${petId}`
+        url: `${DOMAIN}/activity/hangout_001/pet/${petId}`
       })
       if (data?.data) {
         console.log(`Pet ${petId} hangout done.`)
