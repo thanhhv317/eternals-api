@@ -172,10 +172,10 @@ export default class App {
       // await service.jumpingRope(3447, 2, 2)
     // })
 
-    scheduleJob('0 */17 * * * *', async () => {
-      console.log('[Cron job] jumping rope pet Quoc 3')
-      await service.jumpingRope(7639, 2, 2)
-    })
+    // scheduleJob('0 */17 * * * *', async () => {
+    //   console.log('[Cron job] jumping rope pet Quoc 3')
+    //   await service.jumpingRope(7639, 2, 2)
+    // })
 
     // Spirit claim 🌠
     // scheduleJob('0 5 0 * * *', async () => {
