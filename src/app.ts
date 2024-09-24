@@ -71,81 +71,81 @@ export default class App {
     // 🐏 sheeps - 4 energy
     scheduleJob('0 0 16 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
-      await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.bird, 10)
       await service.harvestResouce(EternalItems.wool, 10, 2)
     })
     scheduleJob('0 0 17 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
-      await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.bird, 10)
       await service.harvestResouce(EternalItems.wool, 10, 2)
     })
     scheduleJob('0 0 18 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
-      await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.bird, 10)
       await service.harvestResouce(EternalItems.wool, 10, 2)
     })
     scheduleJob('0 0 19 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
-      await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.bird, 10)
       await service.harvestResouce(EternalItems.wool, 10, 2)
     })
     scheduleJob('0 0 20 * * *', async () => {
       console.log('[Cron job] harverting 10 sheeps')
-      await service.harvestResouce(EternalItems.wool, 10)
+      await service.harvestResouce(EternalItems.bird, 10)
       await service.harvestResouce(EternalItems.wool, 10, 2)
     })
 
     // 🪵 - 3 energy
     scheduleJob('0 0 21 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
-      await service.harvestResouce(EternalItems.meatRabbit, 10)
+      await service.harvestResouce(EternalItems.bird, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 22 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
-      await service.harvestResouce(EternalItems.meatRabbit, 10)
+      await service.harvestResouce(EternalItems.bird, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 23 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
-      await service.harvestResouce(EternalItems.meatRabbit, 10)
+      await service.harvestResouce(EternalItems.bird, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 0 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
-      await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.flowerFire, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 1 * * *', async () => {
       console.log('[Cron job] harverting 10 woods')
-      await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.flowerFire, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
 
     // 🦋 - 4 energy
     scheduleJob('0 0 2 * * *', async () => {
       console.log('[Cron job] harverting 10 butterfly')
-      await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.flowerFire, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 3 * * *', async () => {
       console.log('[Cron job] harverting 10 butterfly')
-      await service.harvestResouce(EternalItems.woods, 10)
+      await service.harvestResouce(EternalItems.flowerFire, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 4 * * *', async () => {
       console.log('[Cron job] harverting 10 butterflies')
-      await service.harvestResouce(EternalItems.butterfly, 10)
+      await service.harvestResouce(EternalItems.flowerFire, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 5 * * *', async () => {
       console.log('[Cron job] harverting 10 butterflies')
-      await service.harvestResouce(EternalItems.butterfly, 10)
+      await service.harvestResouce(EternalItems.flowerFire, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
     scheduleJob('0 0 6 * * *', async () => {
       console.log('[Cron job] harverting 10 butterflies')
-      await service.harvestResouce(EternalItems.butterfly, 10)
+      await service.harvestResouce(EternalItems.flowerFire, 10)
       await service.harvestResouce(EternalItems.woods, 10, 2)
     })
 
