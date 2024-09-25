@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { slice } from 'lodash'
 import { Service } from 'typedi'
-import { SECOND_SECRET_TOKEN, SECRET_TOKEN } from '@/config'
+import { SECOND_SECRET_TOKEN, SECRET_TOKEN, THIRD_SECRET_TOKEN } from '@/config'
 import { EternalItems } from '@/constants/eternal-item.constants'
 import { sleep } from '@/utils/function'
 
@@ -210,6 +210,8 @@ export class EternalService {
   private getPetToken(accountNumber: number) {
     if (accountNumber === 1) {
       return SECRET_TOKEN
+    } else if (accountNumber === 3) {
+      return THIRD_SECRET_TOKEN
     } else {
       return SECOND_SECRET_TOKEN
     }
@@ -452,7 +454,7 @@ export class EternalService {
   async convertToToken(accountNumber: number, pack = 1) {
     await this.convertToC98(accountNumber, pack)
     await sleep(20000)
-    await this.convertToC98(accountNumber, pack )
+    await this.convertToC98(accountNumber, pack)
   }
 
   async convertToC98(accountNumber: number, pack = 1) {
