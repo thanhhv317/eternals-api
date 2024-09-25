@@ -449,6 +449,12 @@ export class EternalService {
     }
   }
 
+  async convertToToken(accountNumber: number, pack = 1) {
+    await this.convertToC98(accountNumber, pack)
+    await sleep(20000)
+    await this.convertToC98(accountNumber, pack )
+  }
+
   async convertToC98(accountNumber: number, pack = 1) {
     try {
       const authorizationToken = this.getPetToken(accountNumber)
@@ -459,7 +465,7 @@ export class EternalService {
         },
         url: `${DOMAIN}/conversion/order/eternal/${pack}`
       })
-
+      console.log(data?.data)
       return data
     } catch (error) {
       console.log(error?.message)
