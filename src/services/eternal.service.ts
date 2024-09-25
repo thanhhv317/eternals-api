@@ -448,4 +448,21 @@ export class EternalService {
       console.log(error?.message)
     }
   }
+
+  async convertToC98(accountNumber: number, pack = 1) {
+    try {
+      const authorizationToken = this.getPetToken(accountNumber)
+      const { data } = await axios({
+        method: 'POST',
+        headers: {
+          Authorization: authorizationToken
+        },
+        url: `${DOMAIN}/conversion/order/eternal/${pack}`
+      })
+
+      return data
+    } catch (error) {
+      console.log(error?.message)
+    }
+  }
 }

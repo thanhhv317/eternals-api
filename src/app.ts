@@ -161,6 +161,14 @@ export default class App {
       // await service.jumpingRope(3364, 2, 2)
     // })
 
+    scheduleJob('0 */15 * * * *', async () => {
+      console.log('Converting C98 Thanh')
+      service.convertToC98(1)
+      
+      console.log('Converting C98 Quoc')
+      service.convertToC98(2)
+    })
+
     // scheduleJob('0 */16 * * * *', async () => {
       // console.log('[Cron job] jumping rope pet 2')
       // const commonPetId = 8169
