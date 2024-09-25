@@ -164,12 +164,14 @@ export default class App {
     scheduleJob('0 */15 * * * *', async () => {
       console.log('Converting C98 Thanh')
       service.convertToToken(1)
+      service.convertToToken(1, 2)
       
       console.log('Converting C98 Quoc')
       service.convertToToken(2)
+      service.convertToToken(2, 2)
 
       console.log('Converting C98 Tuan')
-      service.convertToToken(3)
+      // service.convertToToken(3)
     })
 
     // scheduleJob('0 */16 * * * *', async () => {
