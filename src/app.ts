@@ -163,8 +163,8 @@ export default class App {
 
     scheduleJob('0 */15 * * * *', async () => {
       console.log('Converting C98 Thanh')
-      service.convertToToken(1)
-      service.convertToToken(1, 2)
+      // service.convertToToken(1)
+      // service.convertToToken(1, 2)
       
       console.log('Converting C98 Quoc')
       service.convertToToken(2)
@@ -174,16 +174,16 @@ export default class App {
       // service.convertToToken(3)
     })
 
-    // scheduleJob('0 */16 * * * *', async () => {
-      // console.log('[Cron job] jumping rope pet 2')
-      // const commonPetId = 8169
-      // const level = 2
-      // const accountNumber = 1
-      // await service.jumpingRope(commonPetId, level, accountNumber)
+    scheduleJob('0 */16 * * * *', async () => {
+      console.log('[Cron job] jumping rope pet 2')
+      const commonPetId = 8169
+      const level = 2
+      const accountNumber = 1
+      await service.jumpingRope(commonPetId, level, accountNumber)
 
       // console.log('[Cron job] jumping rope pet Quoc 2')
       // await service.jumpingRope(3447, 2, 2)
-    // })
+    })
 
     // scheduleJob('0 */17 * * * *', async () => {
     //   console.log('[Cron job] jumping rope pet Quoc 3')
