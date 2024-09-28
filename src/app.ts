@@ -171,7 +171,7 @@ export default class App {
       service.convertToToken(2, 2)
 
       console.log('Converting C98 Tuan')
-      // service.convertToToken(3)
+      service.convertToToken(3)
     })
 
     scheduleJob('0 */16 * * * *', async () => {
