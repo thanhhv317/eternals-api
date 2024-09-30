@@ -220,9 +220,20 @@ export default class App {
       await service.recoverTotalMood(1)
       await service.recoverTotalMood(2)
     })
+
     scheduleJob('0 5 7 * * *', async () => {
       console.log('[Cron job] Restore pet health')
       await service.recoverTotalMood(1)
+      await service.recoverTotalMood(2)
+    })
+
+    scheduleJob('0 58 11 * * *', async () => {
+      console.log('[Cron job] Restore pet health')
+      await service.recoverTotalMood(2)
+    })
+
+    scheduleJob('0 55 11 * * *', async () => {
+      console.log('[Cron job] Restore pet health')
       await service.recoverTotalMood(2)
     })
   }

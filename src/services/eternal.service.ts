@@ -17,15 +17,16 @@ const HEALTH_ITEM = {
 }
 
 const CLEAN_PET_ITEM = {
-  broom: 2431, // FUR, WEB - 2431
+  broom: 2431, // FUR, WEB, DUST - 2431
   soap: 2430, // DIRT - 2430
   poopShove: 2433, // POOP - 2433
-  cleaningSpray: 2432 // VOMIT - 2432
+  cleaningSpray: 2432, // VOMIT - 2432
 }
 
 enum CLEAN_PET_TYPE {
   FUR = 'FUR',
   WEB = 'WEB',
+  DUST= 'DUST',
 
   DIRT = 'DIRT',
 
@@ -39,6 +40,8 @@ type WasteStats = {
   fur: number
   poop: number
   vomit: number
+  web: number
+  dust: number
 }
 
 const DOMAIN = 'https://api-core.eternals.game'
@@ -306,8 +309,7 @@ export class EternalService {
   }
 
   async handleCleanHouse(waste: WasteStats, petId: number, authorizationToken: string) {
-    console.log(`handleCleanHouse waste = ${JSON.stringify(waste, null, 2)}`)
-    const { dirt, fur, poop, vomit } = waste
+    const { dirt, fur, poop, vomit, web, dust } = waste
 
     for (let i = 0; i < dirt; i++) {
       await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.soap, CLEAN_PET_TYPE.DIRT)
@@ -317,7 +319,15 @@ export class EternalService {
     for (let i = 0; i < fur; i++) {
       await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.broom, CLEAN_PET_TYPE.FUR)
       await sleep(900)
+    }
+
+    for (let i = 0; i < web; i++) {
       await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.broom, CLEAN_PET_TYPE.WEB)
+      await sleep(900)
+    }
+
+    for (let i = 0; i < dust; i++) {
+      await this.clearPet(authorizationToken, petId, CLEAN_PET_ITEM.broom, CLEAN_PET_TYPE.DUST)
       await sleep(900)
     }
 
